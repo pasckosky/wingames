@@ -1,0 +1,56 @@
+<?xml ?>
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 179 179" style="background-color:transparent">
+<path d="M50,30 140,30 160,50 160,140 140,160 50,160 30,140 30,50z" style="fill:black"/>
+<rect x="58" y="10" width="14" height="20" style="fill:white; stroke:black;stroke-width:1;"/>
+<rect x="78" y="10" width="14" height="20" style="fill:white; stroke:black;stroke-width:1;"/>
+<rect x="98" y="10" width="14" height="20" style="fill:white; stroke:black;stroke-width:1;"/>
+<rect x="118" y="10" width="14" height="20" style="fill:white; stroke:black;stroke-width:1;"/>
+
+<rect x="10" y="58" width="20" height="14" style="fill:white; stroke:black;stroke-width:1;"/>
+<rect x="10" y="78" width="20" height="14" style="fill:white; stroke:black;stroke-width:1;"/>
+<rect x="10" y="98" width="20" height="14" style="fill:white; stroke:black;stroke-width:1;"/>
+<rect x="10" y="118" width="20" height="14" style="fill:white; stroke:black;stroke-width:1;"/>
+
+<circle cx="45"  cy="45" r="4" style="fill:green;"/>
+<circle cx="65"  cy="45" r="8" style="fill:white;"/>
+<circle cx="85"  cy="45" r="8" style="fill:white;"/>
+<circle cx="105" cy="45" r="8" style="fill:white;"/>
+<circle cx="125" cy="45" r="8" style="fill:white;"/>
+<circle cx="145" cy="45" r="4" style="fill:blue;"/>
+
+<circle cx="45"  cy="65" r="8" style="fill:white;"/>
+<circle cx="65"  cy="65" r="8" style="fill:green;"/>
+<circle cx="85"  cy="65" r="8" style="fill:green;"/>
+<circle cx="105" cy="65" r="8" style="fill:blue;"/>
+<circle cx="125" cy="65" r="8" style="fill:blue;"/>
+<circle cx="145" cy="65" r="8" style="fill:white;"/>
+
+<circle cx="45"  cy="85" r="8" style="fill:white;"/>
+<circle cx="65"  cy="85" r="8" style="fill:green;"/>
+<circle cx="85"  cy="85" r="8" style="fill:green;"/>
+<circle cx="105" cy="85" r="8" style="fill:blue;"/>
+<circle cx="125" cy="85" r="8" style="fill:blue;"/>
+<circle cx="145" cy="85" r="8" style="fill:white;"/>
+
+<circle cx="45"  cy="105" r="8" style="fill:white;"/>
+<circle cx="65"  cy="105" r="8" style="fill:red;"/>
+<circle cx="85"  cy="105" r="8" style="fill:red;"/>
+<circle cx="105" cy="105" r="8" style="fill:yellow;"/>
+<circle cx="125" cy="105" r="8" style="fill:yellow;"/>
+<circle cx="145" cy="105" r="8" style="fill:white;"/>
+
+<circle cx="45"  cy="125" r="8" style="fill:white;"/>
+<circle cx="65"  cy="125" r="8" style="fill:red;"/>
+<circle cx="85"  cy="125" r="8" style="fill:red;"/>
+<circle cx="105" cy="125" r="8" style="fill:yellow;"/>
+<circle cx="125" cy="125" r="8" style="fill:yellow;"/>
+<circle cx="145" cy="125" r="8" style="fill:white;"/>
+
+<circle cx="45"  cy="145" r="4" style="fill:red;"/>
+<circle cx="65"  cy="145" r="8" style="fill:white;"/>
+<circle cx="85"  cy="145" r="8" style="fill:white;"/>
+<circle cx="105" cy="145" r="8" style="fill:white;"/>
+<circle cx="125" cy="145" r="8" style="fill:white;"/>
+<circle cx="145" cy="145" r="4" style="fill:yellow;"/>
+
+</svg>
