@@ -38,4 +38,5 @@ Words of Sebastian:
 
 ### Versions
 
-* [1.0 - Download](4x4/Releases/v1.0/4x4.exe): First version of the game. It can surely be optimized and graphically enhanced
+* [1.0 - Download](4x4/Releases/v1.0/4x4.exe): First version of the game. It can surely be optimized and graphically ~enhanced~ improved
+* [1.1 - Download](4x4/Releases/v1.1/4x4.exe): Improved the graphic of the board

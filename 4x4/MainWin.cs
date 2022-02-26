@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,6 +41,16 @@ namespace Game
         private Dot[,] table;
         private Pusher[] v;
         private Pusher[] h;
+
+        private static readonly Dictionary<Dot, Brush> dotColors = new Dictionary<Dot, Brush>
+        {
+            {Dot.Black, new SolidBrush(Color.FromArgb(64,64,64)) },
+            {Dot.Green, Brushes.Green },
+            {Dot.Red, Brushes.Red },
+            {Dot.Blue, Brushes.Blue },
+            {Dot.Yellow, Brushes.Yellow },
+            {Dot.White, Brushes.White }
+        };
 
         private void tableSlide(Slide what, int j, bool update=true)
         {
@@ -170,58 +181,7 @@ namespace Game
 
         private void apply()
         {
-            foreach (Tuple<int, Label> dot in Extensions.asIterable(this.d00, this.d10, this.d20, this.d30, this.d40, this.d50,
-                                                                    this.d01, this.d11, this.d21, this.d31, this.d41, this.d51,
-                                                                    this.d02, this.d12, this.d22, this.d32, this.d42, this.d52,
-                                                                    this.d03, this.d13, this.d23, this.d33, this.d43, this.d53,
-                                                                    this.d04, this.d14, this.d24, this.d34, this.d44, this.d54,
-                                                                    this.d05, this.d15, this.d25, this.d35, this.d45, this.d55)
-                                                        .enumerate())
-            {
-                int x = dot.Item1 % 6;
-                int y = dot.Item1 / 6;
-                Label ctrl = dot.Item2;
-                bool showArrow;
-
-                showArrow = false;
-                switch (this.table[x, y])
-                {
-                    case Dot.Black:
-                        ctrl.BackColor = Color.Black;
-                        break;
-                    case Dot.Blue:
-                        ctrl.BackColor = Color.Blue;
-                        break;
-                    case Dot.Green:
-                        ctrl.BackColor = Color.Green;
-                        break;
-                    case Dot.Red:
-                        ctrl.BackColor = Color.Red;
-                        break;
-                    case Dot.Yellow:
-                        ctrl.BackColor = Color.Yellow;
-                        break;
-                    case Dot.White:
-                        ctrl.BackColor = Color.White;
-                        showArrow = true;
-                        break;
-                }
-
-                if (!showArrow)
-                {
-                    if (ctrl.Text != "")
-                        ctrl.Text = "";
-                }
-                else if (x == 0 && y > 0 && y < 5)
-                    ctrl.Text = "à";
-                else if (x == 5 && y > 0 && y < 5)
-                    ctrl.Text = "ß";
-                else if (y == 0 && x > 0 && x < 5)
-                    ctrl.Text = "â";
-                else if (y == 5 && x > 0 && x < 5)
-                    ctrl.Text = "á";
-
-            }
+            this.body.Refresh();
 
             foreach (Tuple<int, Button> pusher in Extensions.asIterable(this.c1Down, this.c2Down, this.c3Down, this.c4Down).enumerate())
                 pusher.Item2.Visible = this.v[pusher.Item1] == Pusher.Relaxed;
@@ -308,26 +268,88 @@ namespace Game
         {
             Label obj = (Label)sender;
             Graphics g = e.Graphics;
-            Color c = obj.BackColor;
-
-            float ratio = 0.8f;
-            if (Extensions.asIterable(this.d00, this.d05, this.d50, this.d55).Which(obj) != -1)
-            {
-                // angle
-                ratio = 0.4f;
-            }
 
             float w = obj.Width;
             float h = obj.Height;
-            float cx = w / 2;
-            float cy = h / 2;
-            float r = Extensions.asIterable(cx, cy).Min() * ratio;
 
-            RectangleF recF = new RectangleF(cx - r, cy - r, r * 2, r * 2);
+            float bw = (w+1) / 6;
+            float bh = (h+1) / 6;
 
-            g.Clear(Color.Black);
-            g.FillEllipse(new SolidBrush(c), recF);
+            GraphicsPath tlangle, trangle, blangle, brangle;
+            GraphicsPath board;
+
+            tlangle = to2DPath(bw, bh, 0, 0, 1, 0, 1, 0);
+            trangle = to2DPath(bw, bh, 5, 0, 4, 0, 5, 1);
+            blangle = to2DPath(bw, bh, 0, 5, 1, 5, 0, 4);
+            brangle = to2DPath(bw, bh, 5, 5, 5, 4, 4, 5);
+
+            board = to2DPath(bw, bh, 1, 0, 5, 0, 6, 1, 6, 5, 5, 6, 1, 6, 0, 5, 0, 1);
+
+            g.FillPath(SystemBrushes.Control, tlangle);
+            g.FillPath(SystemBrushes.Control, trangle);
+            g.FillPath(SystemBrushes.Control, blangle);
+            g.FillPath(SystemBrushes.Control, brangle);
+
+            g.FillPath(Brushes.Black, board);
+
+
+            //bw = 1f;
+            //bh = 1f;
+            float r = Extensions.asIterable(bw, bh).Min() * 0.75f /2;
+
+            foreach (int y in Extensions.Range(6))
+                foreach (int x in Extensions.Range(6))
+                {
+                    RectangleF rF;
+
+                    if ((x == 0 && y == 0) || (x == 5 && y == 0) || (x == 0 && y == 5) || (x == 5 && y == 5))
+                    {
+                        // Consider the black rectangle
+                        rF = circle(bw, bh, x, y, r / 2);
+                        if (x == 0)
+                            rF.X += bw / 4;
+                        else if (x == 5)
+                            rF.X -= bw / 4;
+
+                        if (y == 0)
+                            rF.Y += bh / 4;
+                        else if (y == 5)
+                            rF.Y -= bh / 4;
+                    }
+                    else
+                        // Normal
+                        rF = circle(bw, bh, x, y, r);
+                    
+                    g.FillEllipse(dotColors[this.table[x, y]], rF);
+                }
         }
+
+        public static GraphicsPath to2DPath(float bw, float bh, params int[] blocks)
+        {
+            int n;
+            PointF[] pt;
+            byte[] ptype;
+
+            n = blocks.Length;
+            if ((n % 2) != 0)
+                throw new ArgumentException();
+            n = n / 2;
+
+            pt = Extensions.Range(n).Select(j => new PointF(bw * blocks[2 * j], bh * blocks[2 * j + 1])).ToArray();
+            ptype = Extensions.Range(n).Select(j => (byte)1).ToArray();
+
+            return new GraphicsPath(pt, ptype);
+        }
+
+        public static RectangleF circle(float bw, float bh, int x, int y, float radius)
+        {
+            float cx, cy;
+
+            cx = x * bw + bw / 2f;
+            cy = y * bh + bh / 2f;
+            return new RectangleF(cx-radius, cy-radius, radius*2, radius*2);
+        }
+
     }
 
     public static class Extensions
